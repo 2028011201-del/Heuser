@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Matrix</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <p class="eyebrow">PATTERN MEMORY CHALLENGE</p>
+      <h1>Memory Matrix</h1>
+      <p class="subtitle">Watch the sequence. Remember it. Repeat it.</p>
+    </header>
+
+    <section class="stats" aria-label="Game statistics">
+      <div><span class="stat-label">ROUND</span><strong id="round">0</strong></div>
+      <div><span class="stat-label">BEST</span><strong id="best">0</strong></div>
+      <div><span class="stat-label">STATUS</span><strong id="status">Ready</strong></div>
+    </section>
+
+    <p id="message" class="message" aria-live="polite">Press Start to begin.</p>
+
+    <section class="grid" id="grid" aria-label="Four color buttons">
+      <button class="tile tile-0" data-tile="0" aria-label="Green"></button>
+      <button class="tile tile-1" data-tile="1" aria-label="Red"></button>
+      <button class="tile tile-2" data-tile="2" aria-label="Yellow"></button>
+      <button class="tile tile-3" data-tile="3" aria-label="Blue"></button>
+    </section>
+
+    <div class="controls">
+      <button id="startBtn" class="primary">Start game</button>
+      <button id="pauseBtn" class="secondary" disabled>Pause</button>
+      <button id="muteBtn" class="secondary" aria-pressed="false">Sound: On</button>
+    </div>
+    <button id="resetBtn" class="text-button">Reset saved best score</button>
+    <p class="hint">Repeat the growing color sequence in the same order. One mistake ends the round.</p>
+  </main>
+</body>
+</html>
