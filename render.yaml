@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: homework-9-server
+    runtime: python
+    plan: free
+    region: singapore
+    branch: main
+    rootDir: CS_CRP/Homework_9
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    autoDeployTrigger: commit
