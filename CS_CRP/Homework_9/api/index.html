@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Screen Universe</title><link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}"></head>
+<body><main class="api-shell"><a class="back" href="/">← HOME</a><p class="eyebrow">LIVE DATA · POWERED BY TVMAZE</p><h1>SCREEN <span>UNIVERSE</span></h1><p class="intro">A hand-picked shelf of adventure shows, loaded live from a free public TV database. Open a card to visit its TVmaze listing.</p>
+<p id="status" class="status" role="status">Loading the screen universe…</p><section id="cards" class="cards" aria-live="polite"></section>
+<aside class="idea"><b>THE PAGE IDEA</b><p>This page transforms live TVmaze show data into a cinematic discovery wall instead of displaying raw JSON or a plain table. Each title gets its own poster-style card with its artwork, genres, language and rating, so visitors can browse the screen universe like a collection.</p></aside>
+<footer>Data source: TVmaze public API · No API key required</footer></main>
+<script>
+const statusNode = document.getElementById("status");
+const cardsNode = document.getElementById("cards");
+function cleanSummary(html) {
+  const temp = document.createElement("div"); temp.innerHTML = html || "";
+  return temp.textContent || temp.innerText || "No synopsis available.";
+}
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+}
+async function loadShows() {
+  try {
+    const response = await fetch("/api/data");
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Could not load shows.");
+    if (!data.shows.length) throw new Error("No shows were returned. Please try again.");
+    statusNode.textContent = "Explore " + data.shows.length + " discoveries from the adventure shelf.";
+    cardsNode.innerHTML = data.shows.map(show => {
+      const summary = cleanSummary(show.summary);
+      return `<article class="show-card">
+        ${show.image ? `<img src="${escapeHtml(show.image)}" alt="" loading="lazy">` : `<div class="no-poster">SCREEN<br>UNIVERSE</div>`}
+        <div class="show-info"><p class="genres">${escapeHtml((show.genres || []).join(" · ") || "TV SHOW")}</p>
+        <h2>${escapeHtml(show.name)}</h2><p class="summary">${escapeHtml(summary).slice(0,190)}${summary.length > 190 ? "…" : ""}</p>
+        <div class="meta"><span>★ ${show.rating ?? "N/A"}</span><span>${escapeHtml(show.language)}</span></div>
+        ${show.url ? `<a href="${escapeHtml(show.url)}" target="_blank" rel="noopener">Explore title ↗</a>` : ""}
+        </div></article>`;
+    }).join("");
+  } catch (error) {
+    statusNode.textContent = error.message || "The screen universe could not be loaded. Please refresh to try again.";
+    statusNode.classList.add("error");
+  }
+}
+loadShows();
+</script></body></html>
