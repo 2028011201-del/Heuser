@@ -1,10 +1,10 @@
-# Homework 9 — Your Own Web Server on Render
+# Homework 9 — Your Own Web Server
 
 ## Project overview
 A Flask backend serving the four required routes:
 - `/` — home page with links to the three destinations
-- `/game` — copied Homework 6 game
-- `/portfolio` — copied Homework 8 portfolio
+- `/game` — Homework 6 game
+- `/portfolio` — Homework 8 portfolio
 - `/api` — Screen Universe, a live-data discovery page using the free TVmaze API
 
 ## Run locally
@@ -17,14 +17,14 @@ python app.py
 ```
 Open http://127.0.0.1:5000.
 
-## Render settings
-- Runtime: Python
-- Root Directory: `CS_CRP/Homework_9`
-- Build Command: `pip install -r requirements.txt`
-- Start Command: `gunicorn app:app --bind 0.0.0.0:$PORT`
-- Instance: Free
+## Deploy on Vercel
+This folder is the Vercel project root. When importing the GitHub repository:
+1. Select the `2028011201-del/Heuser` repository.
+2. Set **Root Directory** to `CS_CRP/Homework_9`.
+3. Keep the detected Python/Flask framework settings and deploy.
+4. No API key or environment variable is required for the TVmaze API.
 
-The server binds to all network interfaces and uses Render's `PORT` environment variable.
+Vercel supports Flask applications and can detect the app from `app.py` and dependencies in `requirements.txt`. The app's routes serve the home, game, portfolio, and API pages.
 
 ## API idea
 The API page uses TVmaze's public show-search endpoint:
@@ -42,4 +42,4 @@ It is free, does not require an API key, and is not a weather API. The page tran
 - `static/site.css`: shared server-site styling
 
 ## Before submission
-Test all four routes locally and on Render. Confirm the game and portfolio assets load, the Homework 7 link still opens, the API error state is friendly, and an unknown route shows the custom 404 page. State the coding agent actually used in your submission; this project was prepared with ChatGPT assistance.
+Test all four routes on the deployed site. Confirm the game and portfolio assets load, the Homework 7 link still opens, the API error state is friendly, and an unknown route shows the custom 404 page. State the coding agent actually used in your submission.
